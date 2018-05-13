@@ -1,18 +1,14 @@
 import types from 'todo/types'
+import createReducer from './createReducer'
 
-export default (state = [], action) => {
-  switch (action.type) {
-    case types.todo.ADD_TODO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false
-        }
-      ]
-    case types.todo.TOGGLE_TODO:
-      return state.map((todo, index) => (index === action.index) ? ({ ...todo, completed: !todo.completed }) : todo)
-    default:
-      return state
+const initialState = []
+
+export default createReducer(initialState, {
+  [types.todo.ADD_TODO]: (state, action) => {
+    let newTodo = { text: action.text, completed: false }
+    return [ ...state, newTodo ]
+  },
+  [types.todo.TOGGLE_TODO]: (state, action) => {
+    return state.map((todo, index) => (index === action.index) ? ({ ...todo, completed: !todo.completed }) : todo)
   }
-}
+})

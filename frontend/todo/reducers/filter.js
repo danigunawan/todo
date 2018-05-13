@@ -1,10 +1,8 @@
 import types from 'todo/types'
+import createReducer from './createReducer'
 
-export default (state = types.filter.SHOW_ALL, action) => {
-  switch (action.type) {
-    case types.filter.SET_FILTER:
-      return action.filter
-    default:
-      return state
-  }
-}
+const initialState = types.filter.SHOW_ALL
+
+export default createReducer(initialState, {
+  [types.filter.SET_FILTER]: (state, action) => action.filter
+})
