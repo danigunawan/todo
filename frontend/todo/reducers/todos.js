@@ -2,7 +2,7 @@ import types from 'todo/types'
 
 export default (state = [], action) => {
   switch (action.type) {
-    case types.ADD_TODO:
+    case types.todo.ADD_TODO:
       return [
         ...state,
         {
@@ -10,7 +10,7 @@ export default (state = [], action) => {
           completed: false
         }
       ]
-    case types.TOGGLE_TODO:
+    case types.todo.TOGGLE_TODO:
       return state.map((todo, index) => (index === action.index) ? ({ ...todo, completed: !todo.completed }) : todo)
     default:
       return state

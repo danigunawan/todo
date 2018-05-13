@@ -1,8 +1,8 @@
 import types from 'todo/types'
 
-export default (state = types.VisibilityFilters.SHOW_ALL, action) => {
+export default (state = types.filter.SHOW_ALL, action) => {
   switch (action.type) {
-    case types.SET_VISIBILITY_FILTER:
+    case types.filter.SET_FILTER:
       return action.filter
     default:
       return state
