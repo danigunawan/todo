@@ -9,7 +9,7 @@ import VisibleTodoList from 'todo/containers/VisibleTodoList'
 
 class Layout extends Component {
   componentDidMount () {
-    this.props.dispatch(actions[types.todo.FETCH_ALL]())
+    this.props.dispatch(actions[types.todo.FETCH_API]())
   }
 
   render () {
@@ -28,6 +28,4 @@ Layout.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
-const mapStoreToProps = store => ({ store })
-
-export default connect(mapStoreToProps)(Layout)
+export default connect()(Layout)
