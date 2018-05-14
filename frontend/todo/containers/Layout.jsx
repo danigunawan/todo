@@ -16,7 +16,7 @@ class Layout extends Component {
     return (
       <div>
         <AddTodo />
-        <VisibleTodoList />
+        <VisibleTodoList filter={this.props.match.params.filter || types.filter.SHOW_ALL} />
         <Footer />
       </div>
     )
@@ -24,6 +24,7 @@ class Layout extends Component {
 }
 
 Layout.propTypes = {
+  match: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 

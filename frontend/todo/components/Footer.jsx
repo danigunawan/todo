@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FilterLink from 'todo/containers/FilterLink'
+import FilterLink from './FilterLink'
 import types from 'todo/types'
 
 export default class Footer extends Component {

@@ -15,7 +15,7 @@ const getVisibleTodos = (todo, filter) => {
   }
 }
 
-const mapStateToProps = state => ({ todo: getVisibleTodos(state.todo, state.filter) })
+const mapStateToProps = (state, ownProps) => ({ todo: getVisibleTodos(state.todo, ownProps.filter) })
 
 const mapDispatchToProps = dispatch => ({ onTodoClick: id => dispatch(actions[types.todo.TOGGLE](id)) })
 

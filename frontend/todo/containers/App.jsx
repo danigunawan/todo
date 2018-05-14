@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
@@ -12,7 +13,9 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Layout />
+        <Router>
+          <Route path='/:filter?' component={Layout} />
+        </Router>
       </Provider>
     )
   }
