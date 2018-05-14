@@ -6,7 +6,7 @@ class TodoList extends Component {
   render () {
     return (
       <ul>
-        {this.props.todos.map((todo, index) => (
+        {this.props.todo.map((todo, index) => (
           <Todo key={index} {...todo} onClick={() => this.props.onTodoClick(index)} />
         ))}
       </ul>
@@ -15,7 +15,7 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  todos: PropTypes.arrayOf(
+  todo: PropTypes.arrayOf(
     PropTypes.shape({
       completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired

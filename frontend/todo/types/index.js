@@ -1,12 +1,15 @@
 export default {
   todo: {
-    ADD_TODO: 'ADD_TODO',
-    TOGGLE_TODO: 'TOGGLE_TODO'
+    FETCH: 'todoFetch',
+    ADD: 'todoAdd',
+    UPDATE: 'todoUpdate',
+    DELETE: 'todoDelete',
+    TOGGLE: 'todoToggle'
   },
   filter: {
-    SET_FILTER: 'SET_FILTER',
-    SHOW_ALL: 'SHOW_ALL',
-    SHOW_COMPLETED: 'SHOW_COMPLETED',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
+    SET: 'filterSet',
+    SHOW_ALL: 'filterShowAll',
+    SHOW_COMPLETED: 'filterShowCompleted',
+    SHOW_ACTIVE: 'filterShowActive'
   }
 }

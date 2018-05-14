@@ -3,20 +3,20 @@ import types from 'todo/types'
 import actions from 'todo/actions'
 import TodoList from 'todo/components/TodoList'
 
-const getVisibleTodos = (todos, filter) => {
+const getVisibleTodos = (todo, filter) => {
   switch (filter) {
     case types.filter.SHOW_COMPLETED:
-      return todos.filter(t => t.completed)
+      return todo.filter(t => t.completed)
     case types.filter.SHOW_ACTIVE:
-      return todos.filter(t => !t.completed)
+      return todo.filter(t => !t.completed)
     case types.filter.SHOW_ALL:
     default:
-      return todos
+      return todo
   }
 }
 
-const mapStateToProps = state => ({ todos: getVisibleTodos(state.todos, state.filter) })
+const mapStateToProps = state => ({ todo: getVisibleTodos(state.todo, state.filter) })
 
-const mapDispatchToProps = dispatch => ({ onTodoClick: id => dispatch(actions.toggleTodo(id)) })
+const mapDispatchToProps = dispatch => ({ onTodoClick: id => dispatch(actions[types.todo.TOGGLE](id)) })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
