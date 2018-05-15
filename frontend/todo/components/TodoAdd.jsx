@@ -1,27 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import types from 'todo/types'
-import actions from 'todo/actions'
+import types from '../store/types'
+import todo from '../store/todo'
 
 class AddTodo extends Component {
   constructor (props) {
     super(props)
     this.state = { value: '' }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange (event) {
-    this.setState({value: event.target.value})
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
   }
 
-  handleSubmit (event) {
+  handleChange = (event) => this.setState({value: event.target.value})
+
+  handleSubmit = (event) => {
     event.preventDefault()
-    if (!this.state.value.trim()) {
-      return
-    }
-    this.props.dispatch(actions[types.todo.ADD_API](this.state.value))
+    if (!this.state.value.trim()) return
+    this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.value))
       .then(() => this.setState({ value: '' }))
   }
 
@@ -35,10 +33,6 @@ class AddTodo extends Component {
       </div>
     )
   }
-}
-
-AddTodo.propTypes = {
-  dispatch: PropTypes.func.isRequired
 }
 
 export default connect()(AddTodo)

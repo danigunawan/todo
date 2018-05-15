@@ -1,27 +1,51 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Todo from './Todo'
+import types from '../store/types'
+import TodoItem from './TodoItem'
 
 class TodoList extends Component {
+  static propTypes = {
+    todo: PropTypes.shape({
+      result: PropTypes.arrayOf(PropTypes.number.isRequired),
+      entities: PropTypes.shape({
+        todos: PropTypes.object.isRequired
+      }).isRequired
+    }).isRequired
+  }
+
   render () {
     return (
-      <ul>
-        {this.props.todo.map((todo, index) => (
-          <Todo key={index} {...todo} onClick={() => this.props.onTodoClick(index)} />
+      <div>
+        {this.props.todo.result.map((id, index) => (
+          <TodoItem key={id} todo={this.props.todo.entities.todos[id]} />
         ))}
-      </ul>
+      </div>
     )
   }
 }
 
-TodoList.propTypes = {
-  todo: PropTypes.arrayOf(
-    PropTypes.shape({
-      completed: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
-    }).isRequired
-  ).isRequired,
-  onTodoClick: PropTypes.func.isRequired
+const getVisibleTodos = (todo, filter) => {
+  let result
+  switch (filter) {
+    case types.filter.SHOW_COMPLETED:
+      result = todo.result.filter(id => todo.entities.todos[id].completed)
+      return {
+        entities: { todos: result.reduce((obj, id) => ({...obj, [id]: todo.entities.todos[id]}), {}) },
+        result
+      }
+    case types.filter.SHOW_ACTIVE:
+      result = todo.result.filter(id => !todo.entities.todos[id].completed)
+      return {
+        entities: { todos: result.reduce((obj, id) => ({...obj, [id]: todo.entities.todos[id]}), {}) },
+        result
+      }
+    case types.filter.SHOW_ALL:
+    default:
+      return todo
+  }
 }
 
-export default TodoList
+const mapStateToProps = (state, ownProps) => ({ todo: getVisibleTodos(state.todo, ownProps.filter) })
+
+export default connect(mapStateToProps)(TodoList)

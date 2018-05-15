@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 export default class FilterLink extends Component {
+  static propTypes = {
+    filter: PropTypes.string.isRequired,
+    children: PropTypes.string.isRequired
+  }
+
   render () {
     return (
       <NavLink
@@ -16,9 +21,4 @@ export default class FilterLink extends Component {
       </NavLink>
     )
   }
-}
-
-FilterLink.propTypes = {
-  filter: PropTypes.string.isRequired,
-  children: PropTypes.string.isRequired
 }

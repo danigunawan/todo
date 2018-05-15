@@ -5,8 +5,9 @@ export default {
     ADD: 'todoAdd',
     ADD_API: 'todoAddAPI',
     UPDATE: 'todoUpdate',
+    UPDATE_API: 'todoUpdateAPI',
     DELETE: 'todoDelete',
-    TOGGLE: 'todoToggle'
+    DELETE_API: 'todoDeleteAPI'
   },
   filter: {
     SET: 'filterSet',

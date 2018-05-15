@@ -3,6 +3,6 @@ import todo from './todo'
 import filter from './filter'
 
 export default combineReducers({
-  todo,
-  filter
+  todo: todo.reducers,
+  filter: filter.reducers
 })

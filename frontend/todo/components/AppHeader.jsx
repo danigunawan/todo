@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import FilterLink from './FilterLink'
-import types from 'todo/types'
+import types from '../store/types'
 
-export default class Footer extends Component {
+export default class AppHeader extends Component {
   render () {
     return (
       <div>
