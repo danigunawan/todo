@@ -46,17 +46,6 @@ const reducers = helper.createReducer(initialState, {
         ...state.result.slice(index + 1)
       ]
     }
-  },
-
-  [types.todo.TOGGLE]: (state, { id }) => {
-    return { ...state,
-      entities: { ...state.entities,
-        todos: { ...state.entities.todos,
-          [id]: { ...state.entities.todos[id], completed: !state.entities.todos[id].completed }
-        }
-      },
-      result: [ ...state.result ]
-    }
   }
 })
 
@@ -73,51 +62,47 @@ const actions = {
 
   [types.todo.TOGGLE]: id => ({ type: types.todo.TOGGLE, id }),
 
-  [types.todo.FETCH_API] () {
-    return (dispatch) => {
-      return window.fetch('/todos')
-        .then(response => response.json())
-        .then(json => {
-          let todos = normalize(json, schema.todosArraySchema)
-          dispatch(actions[types.todo.FETCH](todos))
-        })
+  [types.todo.FETCH_API]: () => {
+    return async dispatch => {
+      let response = await window.fetch('/todos')
+      let todos = await response.json()
+      let normalizedTodos = normalize(todos, schema)
+      dispatch(actions[types.todo.FETCH](normalizedTodos))
     }
   },
 
-  [types.todo.ADD_API] (text) {
-    return (dispatch) => {
-      return window.fetch('/todos', {
+  [types.todo.ADD_API]: (text) => {
+    return async dispatch => {
+      let response = await window.fetch('/todos', {
         method: 'post',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({text: text})
       })
-        .then(response => response.json())
-        .then(json => dispatch(actions[types.todo.ADD](json)))
+      let todo = await response.json()
+      dispatch(actions[types.todo.ADD](todo))
     }
   },
 
-  [types.todo.UPDATE_API] (todo) {
-    return (dispatch) => {
-      return window.fetch(`/todos/${todo.id}`, {
+  [types.todo.UPDATE_API]: (todo) => {
+    return async dispatch => {
+      await window.fetch(`/todos/${todo.id}`, {
         method: 'put',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(todo)
       })
-        .then(() => {
-          dispatch(actions[types.todo.UPDATE](todo))
-        })
+      dispatch(actions[types.todo.UPDATE](todo))
     }
   },
 
   [types.todo.DELETE_API] (id) {
-    return (dispatch) => {
-      return window.fetch(`/todos/${id}`, {
+    return async dispatch => {
+      await window.fetch(`/todos/${id}`, {
         method: 'delete',
         credentials: 'include'
       })
-        .then(() => dispatch(actions[types.todo.DELETE](id)))
+      dispatch(actions[types.todo.DELETE](id))
     }
   }
 }

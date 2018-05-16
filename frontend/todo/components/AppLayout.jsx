@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
+import constants from '../store/constants'
 import AppHeader from './AppHeader'
 import TodoAdd from './TodoAdd'
 import TodoList from './TodoList'
@@ -22,7 +23,7 @@ class AppLayout extends Component {
       <div>
         <AppHeader /> <br />
         <TodoAdd /> <br />
-        <TodoList filter={this.props.match.params.filter || types.filter.SHOW_ALL} />
+        <TodoList filter={this.props.match.params.filter || constants.SHOW_ALL} />
       </div>
     )
   }

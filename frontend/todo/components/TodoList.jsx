@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import types from '../store/types'
+import constants from '../store/constants'
 import TodoItem from './TodoItem'
 
 class TodoList extends Component {
@@ -28,19 +28,19 @@ class TodoList extends Component {
 const getVisibleTodos = (todo, filter) => {
   let result
   switch (filter) {
-    case types.filter.SHOW_COMPLETED:
+    case constants.SHOW_COMPLETED:
       result = todo.result.filter(id => todo.entities.todos[id].completed)
       return {
         entities: { todos: result.reduce((obj, id) => ({...obj, [id]: todo.entities.todos[id]}), {}) },
         result
       }
-    case types.filter.SHOW_ACTIVE:
+    case constants.SHOW_ACTIVE:
       result = todo.result.filter(id => !todo.entities.todos[id].completed)
       return {
         entities: { todos: result.reduce((obj, id) => ({...obj, [id]: todo.entities.todos[id]}), {}) },
         result
       }
-    case types.filter.SHOW_ALL:
+    case constants.SHOW_ALL:
     default:
       return todo
   }

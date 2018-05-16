@@ -10,9 +10,6 @@ export default {
     DELETE_API: 'todoDeleteAPI'
   },
   filter: {
-    SET: 'filterSet',
-    SHOW_ALL: 'filterShowAll',
-    SHOW_COMPLETED: 'filterShowCompleted',
-    SHOW_ACTIVE: 'filterShowActive'
+    SET: 'filterSet'
   }
 }
