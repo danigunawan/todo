@@ -1,13 +1,66 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { Component } from 'react'
+import { normalize } from 'normalizr'
+import schema from './schema'
+import {
+  // Alert,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native'
 
-export default class App extends React.Component {
+export default class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      entities: { todos: {} },
+      result: [],
+      index: 1,
+      text: ''
+    }
+  }
+
+  handleChange = text => this.setState({text: text})
+
+  handleButton = () => {
+    this.setState({
+      entities: {
+        todos: { ...this.state.entities.todos,
+          [this.state.index]: { id: this.state.index, text: this.state.text, completed: false } }
+      },
+      result: [ ...this.state.result, this.state.index ],
+      index: this.state.index + 1,
+      text: ''
+    })
+  }
+
+  async componentDidMount () {
+    let response = await window.fetch('https://0836a63f.ngrok.io/todos')
+    let todos = await response.json()
+    let normalizedTodos = normalize(todos, schema)
+    let maxIndex = Math.max(...normalizedTodos.result)
+    this.setState({ ...normalizedTodos, index: maxIndex + 1 })
+  }
+
   render () {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text>Add new todo</Text>
+        <TextInput
+          style={{height: 40}}
+          placeholder='Go shopping'
+          value={this.state.text}
+          onChangeText={this.handleChange}
+        />
+        <Button
+          onPress={this.handleButton}
+          title='Add'
+        />
+        <ScrollView>
+          {this.state.result.map((id) => (<Text key={id}>{this.state.entities.todos[id].text}</Text>))}
+        </ScrollView>
       </View>
     )
   }
@@ -16,8 +69,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    padding: 10
   }
 })
