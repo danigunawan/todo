@@ -1,134 +1,223 @@
-# Rails with React
+# TODO App on Rails with React and React Native
 
-## Description
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-Rails with React boilerplate.
+## 1. Description
 
-## Dependencies
+Two apps:
+
+- TODO Web App — Rails web app with React frontend
+- TODO Mobile App - React Native app with Rails backend
+
+## 2. Dependencies
 
 - Ruby 2.5.0
 - Rails 5.2.0
 - Webpacker: 3.5.3
-- React: 16.3.2
+- React: 16.3
+- React Native: 0.55
 
-## History
+## 3. TODO Web App
 
-`$ rails new todo --webpack=react`
-
-`$ mv app/javascript frontend`
-
-File `config/webpacker.yaml` :
-
-```yaml
-default: &default
-  source_path: frontend
+### 3.1. Directory structure
 
 ```
-
-`$ eslint --init`
-
-- Use a popular style guide
-- Standard
-- YAML
-
-`$ yarn add -D eslint-plugin-react`
-
-File `.eslint.yml` :
-
-```yaml
-extends:
-  - standard
-  - 'plugin:react/recommended'
-plugins:
-  - react
+frontend
+|-todo
+| |-index.jsx
+| |-App.jsx
+| |
+| |-components
+| | |-AppHeader.jsx
+| | |-AppLayout.jsx
+| | |-TodoAdd.jsx
+| | |-TodoItem.jsx
+| | |-TodoList.jsx
+| |
+| |-store
+| | |-index.js
+| | |-constants.js
+| | |-types.js
+| | |-helper.js
+| | |
+| | |-todo
+| | | |-index.js
+| | | |-schema.js
+| | |-filter
+| | | |-index.js
 ```
 
-`$ yarn add prop-types`
+### 3.2. Components
 
-File `app/controllers/application_controller.rb` :
+There are no separate directories for Presentational (Dumb) Components and Container (Smart) Components. All Components stored in `components` directory.
 
-```ruby
-class ApplicationController < ActionController::Base
-  def index
-  end
-end
-```
+### 3.3. Store
 
-File `config/routes.rb` :
+Trying to make store as simple and clear as possible I place each module in separate directory.
+In this case `todo` module and `filter` module.
 
-```ruby
-Rails.application.routes.draw do
-  root 'application#index'
-end
-```
+In each module's `index.js` file there is:
 
-File `app/views/layouts/application.html.erb` :
+- initial state
+- action creators
+- reducers
+- asycn actions (launched by `redux-thunk` middleware)
 
-```erb
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Todo</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+All global `constants` and action `types` stored in root `store` directory.
 
-    <%= javascript_pack_tag 'application' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
-</html>
-```
-
-File `app/views/application/index.html.erb` :
-
-```html
-<div id="app"/>
-```
-
-File `frontend/packs/application.js` :
+### 3.3.1 Module description
 
 ```js
-import 'todo'
+export default {
+  actions,
+  reducers
+}
 ```
 
-File `frontend/todo/index.jsx` :
+#### 3.3.2. Action creators boilerplate
 
-```jsx
-import React from 'react'
-import { render } from 'react-dom'
-import App from './App'
+```js
+const actions = {
+  [types.module.ACTION_TYPE]: payload => ({ type: types.module.ACTION_TYPE, payload }),
 
-document.addEventListener('DOMContentLoaded', () => {
-  render(
-    <App />,
-    document.getElementById('app')
-  )
-})
+  [types.module.OTHER_ACTION_TYPE]: payload => ({ type: types.module.OTHER_ACTION_TYPE, payload })
+  
+}
 ```
 
-File `frontend/todo/App.jsx` :
+#### 3.3.3. Reducer boilerplate
 
-```jsx
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+```js
+const reducers = helper.createReducer(initialState, {
+  [types.module.ACTION_TYPE]: (state, action) => action.payload,
 
-export default class App extends Component {
-  render () {
-    return (
-      <div>Hello {this.props.name}!</div>
-    )
+  [types.module.OTHER_ACTION_TYPE]: (state, action) => {
+    return { ...state, action.newState }
+  }
+```
+
+No `switch` and `case` statements.
+This functionality is implemented by `createReducer` helper:
+
+```js
+createReducer (initialState, handlers) {
+  return (state = initialState, action) => {
+    if (handlers.hasOwnProperty(action.type)) {
+      return handlers[action.type](state, action)
+    } else {
+      return state
+    }
   }
 }
+```
 
-App.defaultProps = {
-  name: 'Matz'
-}
+#### 3.3.4. Async actions boilerplate
 
-App.propTypes = {
-  name: PropTypes.string
+```js
+const actions = {
+  [types.module.ASYNC_ACTION_TYPE]: (payload) => {
+    return async (dispatch) => {
+      await someAsyncAction(payload)
+    }
+  }
 }
 ```
 
-`$ rails s`
+### 3.4. Run
+
+```sh
+$ rails s
+$ ./bin/webpack-dev-server
+$ open http://localhost:3000
+```
+
+## 4. TODO Mobile App
+
+Created using CRNA — Create React Native App.
+
+### 4.1. Directory structure
+
+```
+frontend
+|-todo-native
+| |-App.js
+| |-crna-entry.js
+| |
+| |-components
+| | |-AppBreadcrumbs.js
+| | |-AppHeader.js
+| | |-AppLayout.js
+| | |-AppNavigation.js
+| | |-TodoAdd.js
+| | |-TodoItem.js
+| | |-TodoList.js
+```
+
+Utilizes store from `frontend/todo/store`.
+
+### 4.2. Run
+
+```sh
+$ rails s -p 3000
+$ ngrok http 3000
+```
+
+Then copy ngrok https url to `AppLayout.js`, `TodoAdd.js` and `TodoItem.js`
+
+```sh
+$ yarn start
+```
+
+Then you can launch app in Expo (available on iOS and Android). No need to install XCode or Android Studio.
+
+## 5. Babel and Style Guide setup
+
+`.babelrc`:
+
+```json
+{
+  "presets": ["babel-preset-expo"],
+  "env": {
+    "development": {
+      "plugins": ["transform-react-jsx-source"]
+    }
+  }
+}
+```
+
+`frontend/todo/.babelrc`:
+
+```json
+{
+  "presets": ["react-app"]
+}
+```
+
+`.eslintrc.yml`:
+
+```jaml
+parser: babel-eslint
+extends:
+  - standard
+  - standard-react
+```
+
+In order to use `transform-class-properties` from JavaScript Stage 1 I had to use `babel-eslint` parser. This allows me to use experimental public class fields syntax and not to bind `this` for every event handler in the constructor:
+
+```js
+class LoggingButton extends React.Component {
+  // This syntax ensures `this` is bound within handleClick.
+  // Warning: this is *experimental* syntax.
+  handleClick = () => {
+    console.log('this is:', this);
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        Click me
+      </button>
+    );
+  }
+}
+```
