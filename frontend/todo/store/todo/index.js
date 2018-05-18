@@ -60,20 +60,18 @@ const actions = {
 
   [types.todo.ADD]: todo => ({ type: types.todo.ADD, todo }),
 
-  [types.todo.TOGGLE]: id => ({ type: types.todo.TOGGLE, id }),
-
-  [types.todo.FETCH_API]: () => {
+  [types.todo.FETCH_API]: (url = '') => {
     return async dispatch => {
-      let response = await window.fetch('/todos')
+      let response = await window.fetch(`${url}/todos`)
       let todos = await response.json()
       let normalizedTodos = normalize(todos, schema)
       dispatch(actions[types.todo.FETCH](normalizedTodos))
     }
   },
 
-  [types.todo.ADD_API]: (text) => {
+  [types.todo.ADD_API]: (text, url = '') => {
     return async dispatch => {
-      let response = await window.fetch('/todos', {
+      let response = await window.fetch(`${url}/todos`, {
         method: 'post',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -84,9 +82,9 @@ const actions = {
     }
   },
 
-  [types.todo.UPDATE_API]: (todo) => {
+  [types.todo.UPDATE_API]: (todo, url = '') => {
     return async dispatch => {
-      await window.fetch(`/todos/${todo.id}`, {
+      await window.fetch(`${url}/todos/${todo.id}`, {
         method: 'put',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -96,9 +94,9 @@ const actions = {
     }
   },
 
-  [types.todo.DELETE_API] (id) {
+  [types.todo.DELETE_API] (id, url = '') {
     return async dispatch => {
-      await window.fetch(`/todos/${id}`, {
+      await window.fetch(`${url}/todos/${id}`, {
         method: 'delete',
         credentials: 'include'
       })

@@ -9,6 +9,7 @@
     "react": "16.3.1",
     "react-dom": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-checkbox": "^2.0.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",

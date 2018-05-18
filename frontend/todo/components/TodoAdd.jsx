@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
 
-class AddTodo extends Component {
+class TodoAdd extends Component {
   constructor (props) {
     super(props)
     this.state = { value: '' }
@@ -35,4 +35,4 @@ class AddTodo extends Component {
   }
 }
 
-export default connect()(AddTodo)
+export default connect()(TodoAdd)
