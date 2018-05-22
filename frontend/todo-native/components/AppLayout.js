@@ -20,7 +20,7 @@ class AppLayout extends Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(todo.actions[types.todo.FETCH_API]('https://d52c7b08.ngrok.io'))
+    this.props.dispatch(todo.actions[types.todo.FETCH_API]('http://krevoe.com'))
   }
 
   render () {

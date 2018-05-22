@@ -1,0 +1,33 @@
+version: '3.0'
+
+services:
+  postgres:
+    environment: &postgres_env
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  backend:
+    environment: &backend_env
+      <<: *postgres_env
+      RAILS_MASTER_KEY:
+      RAILS_MAX_THREADS:
+      RAILS_ENV: production
+      POSTGRES_HOST: postgres
+    build:
+      args:
+        REPOSITORY: git@github.com:dmlaziuk/todo.git
+        BRANCH: master
+    ports:
+      - 80:3000
+    volumes:
+      - ./log:/var/www/todo/log
+      - ./tmp:/var/www/todo/tmp
+      - public:/var/www/todo/public
+    command: sh -c "./docker-entrypoint.sh"
+
+volumes:
+  public:
