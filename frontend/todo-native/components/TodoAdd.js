@@ -25,7 +25,7 @@ class TodoAdd extends Component {
 
   handleAdd = () => {
     if (!this.state.text.trim()) return
-    this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.text, 'http://krevoe.com'))
+    this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.text, 'https://krevoe.com'))
       .then(() => this.setState({ text: '' }))
   }
 

@@ -20,7 +20,7 @@ class AppLayout extends Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(todo.actions[types.todo.FETCH_API]('http://krevoe.com'))
+    this.props.dispatch(todo.actions[types.todo.FETCH_API]('https://krevoe.com'))
   }
 
   render () {
