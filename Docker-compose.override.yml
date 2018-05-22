@@ -21,13 +21,38 @@ services:
       args:
         REPOSITORY: git@github.com:dmlaziuk/todo.git
         BRANCH: master
-    ports:
-      - 80:3000
     volumes:
       - ./log:/var/www/todo/log
       - ./tmp:/var/www/todo/tmp
       - public:/var/www/todo/public
     command: sh -c "./docker-entrypoint.sh"
+
+  nginx:
+    environment: &nginx_env
+      TZ: Europe/Minsk
+      LETSENCRYPT: 'true'
+      LE_EMAIL: dm.laziuk@gmail.com
+      LE_FQDN: krevoe.com
+      SSL_CERT: le-crt.pem
+      SSL_KEY: le-key.pem
+      SSL_CHAIN_CERT: le-chain-crt.pem
+    image: todo/nginx
+    build:
+      context: ./docker/nginx
+      args:
+        ENVIRONMENT: production
+    hostname: nginx
+    restart: always
+    volumes:
+        - ./ssl:/etc/nginx/ssl
+        - ./tmp:/var/www/todo/tmp
+        - ./log:/var/www/todo/log
+        - public:/var/www/todo/public
+    depends_on:
+      - backend
+    ports:
+        - 80:80
+        - 443:443
 
 volumes:
   public:
