@@ -1,16 +1,38 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import constants from '../store/constants'
+import filter from '../store/filter'
+import types from '../store/types'
 
-export default class AppHeader extends Component {
+class AppHeader extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  }
+
+  handleAll = () => {
+    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ALL))
+  }
+
+  handleActive = () => {
+    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ACTIVE))
+  }
+
+  handleCompleted = () => {
+    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
+  }
+
   render () {
     return (
       <div>
         <h3>TODO App</h3>
-        <NavLink to={`/${constants.SHOW_ALL}`}>All</NavLink>&nbsp;
-        <NavLink to={`/${constants.SHOW_ACTIVE}`}>Active</NavLink>&nbsp;
-        <NavLink to={`/${constants.SHOW_COMPLETED}`}>Completed</NavLink>
+        <NavLink to={`/${constants.SHOW_ALL}`}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
+        <NavLink to={`/${constants.SHOW_ACTIVE}`} ><span onClick={this.handleActive}>Active</span></NavLink>&nbsp;
+        <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>
       </div>
     )
   }
 }
+
+export default connect()(AppHeader)

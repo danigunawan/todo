@@ -30,7 +30,7 @@ services:
   nginx:
     environment: &nginx_env
       TZ: Europe/Minsk
-      LETSENCRYPT: 'true'
+      LETSENCRYPT: 'false'
       LE_EMAIL: dm.laziuk@gmail.com
       LE_FQDN: krevoe.com
       SSL_CERT: le-crt.pem

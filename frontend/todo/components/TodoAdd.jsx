@@ -20,7 +20,7 @@ class TodoAdd extends Component {
     event.preventDefault()
     if (!this.state.value.trim()) return
     this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.value))
-      .then(() => this.setState({ value: '' }))
+    this.setState({ value: '' })
   }
 
   render () {

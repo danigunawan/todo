@@ -15,7 +15,7 @@ class TodoItem extends Component {
     todoDelete: PropTypes.func.isRequired
   }
 
-  handleToggle = (event) => {
+  handleChange = (event) => {
     event.stopPropagation()
     this.props.todoUpdate({ ...this.props.todo, completed: !this.props.todo.completed })
   }
@@ -32,7 +32,7 @@ class TodoItem extends Component {
           id={this.props.todo.id}
           type='checkbox'
           checked={this.props.todo.completed}
-          onClick={this.handleToggle}
+          onChange={this.handleChange}
         />
         <label htmlFor={this.props.todo.id}>{this.props.todo.text}</label>
         &nbsp;&nbsp;&nbsp;
@@ -42,8 +42,6 @@ class TodoItem extends Component {
   }
 }
 
-const mapStateToProps = state => ({ state })
-
 const mapDispatchToProps = dispatch => {
   return {
     todoUpdate: newTodo => dispatch(todo.actions[types.todo.UPDATE_API](newTodo)),
@@ -51,4 +49,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoItem)
+export default connect(null, mapDispatchToProps)(TodoItem)
