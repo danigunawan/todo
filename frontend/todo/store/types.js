@@ -11,5 +11,14 @@ export default {
   },
   filter: {
     SET: 'filterSet'
+  },
+  uuid: {
+    INITIALIZE: 'uuidInitialize',
+    SET_SESSION_ID: 'uuidSetSessionID',
+    SET_BROWSER_ID: 'uuidSetBrowserID',
+    SET_COMPUTER_ID: 'uuidSetComputerID',
+    SET_FINGERPRINT_ID: 'uuidSetFingerprintID',
+    SET_USER_ID: 'uuidSetUserID',
+    SET_AUTH_TOKEN: 'uuidSetAuthToken'
   }
 }

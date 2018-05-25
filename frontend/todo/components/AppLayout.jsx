@@ -1,32 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import types from '../store/types'
-import todo from '../store/todo'
-import constants from '../store/constants'
 import AppHeader from './AppHeader'
 import TodoAdd from './TodoAdd'
 import TodoList from './TodoList'
 
-class AppLayout extends Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
-  }
-
-  componentDidMount () {
-    this.props.dispatch(todo.actions[types.todo.FETCH_API]())
-  }
-
+export default class AppLayout extends Component {
   render () {
     return (
       <div>
         <AppHeader /> <br />
         <TodoAdd /> <br />
-        <TodoList filter={this.props.match.params.filter || constants.SHOW_ALL} />
+        <TodoList />
       </div>
     )
   }
 }
-
-export default connect()(AppLayout)

@@ -4,9 +4,11 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "expo": "^27.0.1",
+    "fingerprintjs2": "^1.8.0",
     "immutable": "^3.8.2",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.1",
+    "randombytes": "^2.0.6",
     "react": "16.3.1",
     "react-dom": "16.3.1",
     "react-native": "~0.55.2",

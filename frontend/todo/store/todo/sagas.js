@@ -3,9 +3,11 @@ import { put, takeEvery } from 'redux-saga/effects'
 import actions from './actions'
 import types from '../types'
 import schema from './schema'
+import uuid from '../uuid'
 
 function * fetchApi (action) {
   let response = yield window.fetch(`${action.url}/todos`)
+  yield put(uuid.actions[types.uuid.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
   let todos = yield response.json()
   let normalizedTodos = normalize(todos, schema)
   yield put(actions[types.todo.FETCH](normalizedTodos))

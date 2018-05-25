@@ -3,6 +3,7 @@ class TodosController < ActionController::API
 
   def index
     @todos = Todo.all
+    response.set_header('X-Client-IP', request.remote_ip)
   end
 
   def create
