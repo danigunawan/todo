@@ -1,11 +1,11 @@
 import actions from './actions'
 import reducers from './reducers'
 import sagas from './sagas'
-// import selectors from './selectors'
+import selectors from './selectors'
 
 export default {
   actions,
-  // selectors,
+  selectors,
   reducers,
   sagas
 }

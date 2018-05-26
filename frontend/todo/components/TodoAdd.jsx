@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
+import uuid from '../store/uuid'
 
 class TodoAdd extends Component {
   constructor (props) {
@@ -11,14 +12,18 @@ class TodoAdd extends Component {
   }
 
   static propTypes = {
+    isAuth: PropTypes.bool.isRequired,
+    uuid: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
   handleChange = (event) => this.setState({value: event.target.value})
 
   handleSubmit = (event) => {
+    console.log(this.props.uuid)
     event.preventDefault()
     if (!this.state.value.trim()) return
+    if (!this.props.isAuth) return console.log('not authorized')
     this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.value))
     this.setState({ value: '' })
   }
@@ -35,4 +40,6 @@ class TodoAdd extends Component {
   }
 }
 
-export default connect()(TodoAdd)
+const mapStateToProps = state => ({ uuid: uuid.selectors.getUUID(state), isAuth: uuid.selectors.isAuth(state) })
+
+export default connect(mapStateToProps)(TodoAdd)

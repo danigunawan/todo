@@ -7,6 +7,7 @@ import uuid from '../uuid'
 
 function * fetchApi (action) {
   let response = yield window.fetch(`${action.url}/todos`)
+  response.headers.forEach((a, b) => console.log(b, a))
   yield put(uuid.actions[types.uuid.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
   let todos = yield response.json()
   let normalizedTodos = normalize(todos, schema)
