@@ -11,11 +11,11 @@ export default {
 
   [types.todo.ADD]: todo => ({ type: types.todo.ADD, todo }),
 
-  [types.todo.FETCH_API]: (url = '') => ({ type: types.todo.FETCH_API, url }),
+  [types.todo.API_FETCH]: () => ({ type: types.todo.API_FETCH }),
 
-  [types.todo.ADD_API]: (text, url = '') => ({ type: types.todo.ADD_API, text, url }),
+  [types.todo.API_ADD]: text => ({ type: types.todo.API_ADD, text }),
 
-  [types.todo.UPDATE_API]: (todo, url = '') => ({ type: types.todo.UPDATE_API, todo, url }),
+  [types.todo.API_UPDATE]: todo => ({ type: types.todo.API_UPDATE, todo }),
 
-  [types.todo.DELETE_API]: (id, url = '') => ({ type: types.todo.DELETE_API, id, url })
+  [types.todo.API_DELETE]: id => ({ type: types.todo.API_DELETE, id })
 }

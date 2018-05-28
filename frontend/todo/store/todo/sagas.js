@@ -3,22 +3,22 @@ import { put, takeEvery } from 'redux-saga/effects'
 import actions from './actions'
 import types from '../types'
 import schema from './schema'
-import uuid from '../uuid'
+// import auth from '../auth'
 
-function * fetchApi (action) {
-  let response = yield window.fetch(`${action.url}/todos`)
-  response.headers.forEach((a, b) => console.log(b, a))
-  yield put(uuid.actions[types.uuid.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
+function * apiFetch (action) {
+  let response = yield window.fetch('/todos')
+  // response.headers.forEach((a, b) => console.log(b, a))
+  // yield put(auth.actions[types.auth.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
   let todos = yield response.json()
   let normalizedTodos = normalize(todos, schema)
   yield put(actions[types.todo.FETCH](normalizedTodos))
 }
 
-function * watchFetchApi () {
-  yield takeEvery(types.todo.FETCH_API, fetchApi)
+function * watchAPIFetch () {
+  yield takeEvery(types.todo.API_FETCH, apiFetch)
 }
 
-function * addApi (action) {
+function * apiAdd (action) {
   let response = yield window.fetch(`${action.url}/todos`, {
     method: 'post',
     credentials: 'include',
@@ -29,11 +29,11 @@ function * addApi (action) {
   yield put(actions[types.todo.ADD](todo))
 }
 
-function * watchAddApi () {
-  yield takeEvery(types.todo.ADD_API, addApi)
+function * watchAPIAdd () {
+  yield takeEvery(types.todo.API_ADD, apiAdd)
 }
 
-function * updateApi (action) {
+function * apiUpdate (action) {
   yield window.fetch(`${action.url}/todos/${action.todo.id}`, {
     method: 'put',
     credentials: 'include',
@@ -43,11 +43,11 @@ function * updateApi (action) {
   yield put(actions[types.todo.UPDATE](action.todo))
 }
 
-function * watchUpdateApi () {
-  yield takeEvery(types.todo.UPDATE_API, updateApi)
+function * watchAPIUpdate () {
+  yield takeEvery(types.todo.API_UPDATE, apiUpdate)
 }
 
-function * deleteApi (action) {
+function * apiDelete (action) {
   yield window.fetch(`${action.url}/todos/${action.id}`, {
     method: 'delete',
     credentials: 'include'
@@ -55,8 +55,8 @@ function * deleteApi (action) {
   yield put(actions[types.todo.DELETE](action.id))
 }
 
-function * watchDeleteApi () {
-  yield takeEvery(types.todo.DELETE_API, deleteApi)
+function * watchAPIDelete () {
+  yield takeEvery(types.todo.API_DELETE, apiDelete)
 }
 
-export default [ watchFetchApi(), watchAddApi(), watchUpdateApi(), watchDeleteApi() ]
+export default [ watchAPIFetch(), watchAPIAdd(), watchAPIUpdate(), watchAPIDelete() ]

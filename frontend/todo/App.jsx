@@ -4,13 +4,12 @@ import { Provider } from 'react-redux'
 import AppLayout from './components/AppLayout'
 import store from './store'
 import types from './store/types'
-import todo from './store/todo'
-import uuid from './store/uuid'
+import auth from './store/auth'
 
 export default class App extends Component {
   componentDidMount () {
-    store.dispatch(todo.actions[types.todo.FETCH_API]())
-    store.dispatch(uuid.actions[types.uuid.INITIALIZE]())
+    const token = document.head.querySelector('meta[name=csrf-token]')
+    store.dispatch(auth.actions[types.api.INITIALIZE]('', token ? token.content : ''))
   }
 
   render () {

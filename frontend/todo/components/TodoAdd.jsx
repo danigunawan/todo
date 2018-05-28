@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
-import uuid from '../store/uuid'
+import auth from '../store/auth'
 
 class TodoAdd extends Component {
   constructor (props) {
@@ -40,6 +40,6 @@ class TodoAdd extends Component {
   }
 }
 
-const mapStateToProps = state => ({ uuid: uuid.selectors.getUUID(state), isAuth: uuid.selectors.isAuth(state) })
+const mapStateToProps = state => ({ uuid: auth.selectors.getUUID(state), isAuth: auth.selectors.isAuth(state) })
 
 export default connect(mapStateToProps)(TodoAdd)

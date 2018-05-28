@@ -1,24 +1,30 @@
 export default {
   todo: {
     FETCH: 'todoFetch',
-    FETCH_API: 'todoFetchAPI',
+    API_FETCH: 'todoAPIFetch',
     ADD: 'todoAdd',
-    ADD_API: 'todoAddAPI',
+    API_ADD: 'todoAPIAdd',
     UPDATE: 'todoUpdate',
-    UPDATE_API: 'todoUpdateAPI',
+    API_UPDATE: 'todoAPIUpdate',
     DELETE: 'todoDelete',
-    DELETE_API: 'todoDeleteAPI'
+    API_DELETE: 'todoAPIDelete'
   },
   filter: {
     SET: 'filterSet'
   },
-  uuid: {
-    INITIALIZE: 'uuidInitialize',
-    SET_SESSION_ID: 'uuidSetSessionID',
-    SET_BROWSER_ID: 'uuidSetBrowserID',
-    SET_COMPUTER_ID: 'uuidSetComputerID',
-    SET_FINGERPRINT_ID: 'uuidSetFingerprintID',
-    SET_USER_ID: 'uuidSetUserID',
-    SET_AUTH_TOKEN: 'uuidSetAuthToken'
+  api: {
+    INITIALIZE: 'apiInitialize',
+    SET_HOST: 'apiSetHost',
+    SET_SESSION_ID: 'apiSetSessionID',
+    SET_BROWSER_ID: 'apiSetBrowserID',
+    SET_COMPUTER_ID: 'apiSetComputerID',
+    SET_FINGERPRINT_ID: 'apiSetFingerprintID',
+    SET_USER_ID: 'apiSetUserID',
+    SET_AUTH_TOKEN: 'apiSetAuthToken',
+    SET_CSRF_TOKEN: 'apiSetCSRFTonen',
+    GET: 'apiGet',
+    POST: 'apiPost',
+    PUT: 'apiPut',
+    DELETE: 'apiDelete'
   }
 }

@@ -1,31 +1,37 @@
 import { createSelector } from 'reselect'
 
-const uuidState = state => state.uuid
+const apiState = state => state.api
 
-const getSessionID = createSelector(uuidState, uuid => uuid.get('sessionID'))
+const getHost = createSelector(apiState, api => api.get('host'))
 
-const getBrowserID = createSelector(uuidState, uuid => uuid.get('browserID'))
+const getSessionID = createSelector(apiState, api => api.get('sessionID'))
 
-const getComputerID = createSelector(uuidState, uuid => uuid.get('computerID'))
+const getBrowserID = createSelector(apiState, api => api.get('browserID'))
 
-const getFingerprintID = createSelector(uuidState, uuid => uuid.get('fingerprintID'))
+const getComputerID = createSelector(apiState, api => api.get('computerID'))
 
-const getUserID = createSelector(uuidState, uuid => uuid.get('userID'))
+const getFingerprintID = createSelector(apiState, api => api.get('fingerprintID'))
 
-const getAuthToken = createSelector(uuidState, uuid => uuid.get('authToken'))
+const getUserID = createSelector(apiState, api => api.get('userID'))
 
-const getUUID = createSelector(getFingerprintID, getComputerID, getSessionID, (fingerprint, computer, session) => fingerprint + computer + session)
+const getAuthToken = createSelector(apiState, api => api.get('authToken'))
 
-const isAuth = createSelector(uuidState, uuid => !!uuid.get('authToken'))
+const getCSRFToken = createSelector(apiState, api => api.get('csrfToken'))
+
+const getUUID = createSelector(getFingerprintID, getComputerID, getSessionID, (fingerprint, computer, session) => `${fingerprint}|${computer}|${session}`)
+
+const isAuth = createSelector(apiState, api => !!api.get('authToken'))
 
 export default {
-  uuidState,
+  apiState,
+  getHost,
   getSessionID,
   getBrowserID,
   getComputerID,
   getFingerprintID,
   getUserID,
   getAuthToken,
+  getCSRFToken,
   getUUID,
   isAuth
 }
