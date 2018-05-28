@@ -3,12 +3,12 @@ import { put, takeEvery } from 'redux-saga/effects'
 import actions from './actions'
 import types from '../types'
 import schema from './schema'
-// import auth from '../auth'
+// import api from '../api'
 
 function * apiFetch (action) {
   let response = yield window.fetch('/todos')
   // response.headers.forEach((a, b) => console.log(b, a))
-  // yield put(auth.actions[types.auth.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
+  // yield put(api.actions[types.api.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
   let todos = yield response.json()
   let normalizedTodos = normalize(todos, schema)
   yield put(actions[types.todo.FETCH](normalizedTodos))

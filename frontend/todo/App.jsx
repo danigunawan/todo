@@ -4,12 +4,14 @@ import { Provider } from 'react-redux'
 import AppLayout from './components/AppLayout'
 import store from './store'
 import types from './store/types'
-import auth from './store/auth'
+import api from './store/api'
 
 export default class App extends Component {
   componentDidMount () {
+    const host = ''
     const token = document.head.querySelector('meta[name=csrf-token]')
-    store.dispatch(auth.actions[types.api.INITIALIZE]('', token ? token.content : ''))
+    const csrfToken = token ? token.content : ''
+    store.dispatch(api.actions[types.api.INITIALIZE](host, csrfToken))
   }
 
   render () {

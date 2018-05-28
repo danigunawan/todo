@@ -1,10 +1,10 @@
 import { all } from 'redux-saga/effects'
 import todo from './todo'
-import auth from './auth'
+import api from './api'
 
 export default function * () {
   yield all([
     ...todo.sagas,
-    ...auth.sagas
+    ...api.sagas
   ])
 }
