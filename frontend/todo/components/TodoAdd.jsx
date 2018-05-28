@@ -23,8 +23,8 @@ class TodoAdd extends Component {
     console.log(this.props.uuid)
     event.preventDefault()
     if (!this.state.value.trim()) return
-    if (!this.props.isAuth) return console.log('not authorized')
-    this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.value))
+    // if (!this.props.isAuth) return console.log('not authorized')
+    this.props.dispatch(todo.actions[types.todo.API_ADD](this.state.value))
     this.setState({ value: '' })
   }
 

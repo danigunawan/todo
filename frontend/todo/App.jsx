@@ -8,7 +8,7 @@ import api from './store/api'
 
 export default class App extends Component {
   componentDidMount () {
-    const host = ''
+    const host = 'http://localhost:3000'
     const token = document.head.querySelector('meta[name=csrf-token]')
     const csrfToken = token ? token.content : ''
     store.dispatch(api.actions[types.api.INITIALIZE](host, csrfToken))

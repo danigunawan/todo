@@ -44,8 +44,8 @@ class TodoItem extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    todoUpdate: newTodo => dispatch(todo.actions[types.todo.UPDATE_API](newTodo)),
-    todoDelete: id => dispatch(todo.actions[types.todo.DELETE_API](id))
+    todoUpdate: newTodo => dispatch(todo.actions[types.todo.API_UPDATE](newTodo)),
+    todoDelete: id => dispatch(todo.actions[types.todo.API_DELETE](id))
   }
 }
 
