@@ -221,3 +221,5 @@ class LoggingButton extends React.Component {
   }
 }
 ```
+
+[Identify unauthorized users](https://stackoverflow.com/questions/216542/how-do-i-uniquely-identify-computers-visiting-my-web-site)

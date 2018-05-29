@@ -15,12 +15,12 @@ class TodoItem extends Component {
     todoDelete: PropTypes.func.isRequired
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     event.stopPropagation()
     this.props.todoUpdate({ ...this.props.todo, completed: !this.props.todo.completed })
   }
 
-  handleDelete = (event) => {
+  handleDelete = event => {
     event.stopPropagation()
     this.props.todoDelete(this.props.todo.id)
   }

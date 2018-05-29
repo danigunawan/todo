@@ -29,7 +29,7 @@ class AppHeader extends Component {
         <h3>TODO App</h3>
         <NavLink to={`/${constants.SHOW_ALL}`}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
         <NavLink to={`/${constants.SHOW_ACTIVE}`} ><span onClick={this.handleActive}>Active</span></NavLink>&nbsp;
-        <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>
+        <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>&nbsp;
       </div>
     )
   }

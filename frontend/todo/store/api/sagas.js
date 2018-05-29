@@ -49,4 +49,8 @@ function * watchDelete () {
   yield takeEvery(types.api.DELETE, api.fetchDelete)
 }
 
-export default [ watchInitialize(), watchGet(), watchPost(), watchPut(), watchDelete() ]
+function * watchLogin () {
+  yield takeEvery(types.api.LOGIN, api.login)
+}
+
+export default [ watchInitialize(), watchGet(), watchPost(), watchPut(), watchDelete(), watchLogin() ]

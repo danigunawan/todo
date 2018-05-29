@@ -25,5 +25,7 @@ export default {
 
   [types.api.PUT]: (path, payload) => ({ type: types.api.PUT, path, payload }),
 
-  [types.api.DELETE]: (path, id) => ({ type: types.api.DELETE, path, id })
+  [types.api.DELETE]: (path, id) => ({ type: types.api.DELETE, path, id }),
+
+  [types.api.LOGIN]: (email, password) => ({ type: types.api.LOGIN, email, password })
 }

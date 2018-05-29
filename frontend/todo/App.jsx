@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
 import AppLayout from './components/AppLayout'
-import store from './store'
+import AppLogin from './components/AppLogin'
+import store, { history } from './store'
 import types from './store/types'
 import api from './store/api'
 
@@ -17,9 +19,12 @@ export default class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Router>
-          <Route path='/:filter?' component={AppLayout} />
-        </Router>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route path='/login' component={AppLogin} />
+            <Route path='/:filter?' component={AppLayout} />
+          </Switch>
+        </ConnectedRouter>
       </Provider>
     )
   }

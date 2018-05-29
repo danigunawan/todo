@@ -1,4 +1,6 @@
 class TodosController < ActionController::API
+  acts_as_token_authentication_handler_for User, fallback: :none
+  before_action :authenticate_user!, except: [:index]
   wrap_parameters format: [:json]
 
   def index

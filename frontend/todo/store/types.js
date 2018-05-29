@@ -25,6 +25,7 @@ export default {
     GET: 'apiGet',
     POST: 'apiPost',
     PUT: 'apiPut',
-    DELETE: 'apiDelete'
+    DELETE: 'apiDelete',
+    LOGIN: 'apiLogin'
   }
 }

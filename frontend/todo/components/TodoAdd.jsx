@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
@@ -13,18 +14,17 @@ class TodoAdd extends Component {
 
   static propTypes = {
     isAuth: PropTypes.bool.isRequired,
-    uuid: PropTypes.string.isRequired,
-    dispatch: PropTypes.func.isRequired
+    addTodo: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired
   }
 
-  handleChange = (event) => this.setState({value: event.target.value})
+  handleChange = event => this.setState({value: event.target.value})
 
-  handleSubmit = (event) => {
-    console.log(this.props.uuid)
+  handleSubmit = event => {
     event.preventDefault()
     if (!this.state.value.trim()) return
-    // if (!this.props.isAuth) return console.log('not authorized')
-    this.props.dispatch(todo.actions[types.todo.API_ADD](this.state.value))
+    if (!this.props.isAuth) return this.props.login()
+    this.props.addTodo(this.state.value)
     this.setState({ value: '' })
   }
 
@@ -40,6 +40,11 @@ class TodoAdd extends Component {
   }
 }
 
-const mapStateToProps = state => ({ uuid: api.selectors.getUUID(state), isAuth: api.selectors.isAuth(state) })
+const mapStateToProps = state => ({ isAuth: api.selectors.isAuth(state) })
 
-export default connect(mapStateToProps)(TodoAdd)
+const mapDispatchToProps = dispatch => ({
+  login: () => dispatch(push('/login')),
+  addTodo: text => dispatch(todo.actions[types.todo.API_ADD](text))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoAdd)
