@@ -6,17 +6,18 @@ import types from '../types'
 import todo from '../todo'
 import api from './api'
 
-const findIP = new Promise(resolve => {
-  let rtc = new (window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection)({iceServers: []})
-  let nop = () => {}
-  rtc.createDataChannel('')
-  rtc.createOffer(c => rtc.setLocalDescription(c, nop, nop), nop)
-  rtc.onicecandidate = c => {
-    try {
-      c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(resolve)
-    } catch (e) {}
-  }
-})
+// const findIP = new Promise(resolve => {
+//   const rtc = new (window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection)({iceServers: []})
+//   const nop = () => {}
+//   rtc.createDataChannel('')
+//   rtc.createOffer(c => rtc.setLocalDescription(c, nop, nop), nop)
+//   rtc.onicecandidate = c => {
+//     try {
+//       console.log(c)
+//       c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(resolve)
+//     } catch (e) {}
+//   }
+// })
 
 function * initialize ({ host, csrfToken }) {
   const { result } = yield new Promise(resolve => new Fingerprint2().get(result => resolve({ result })))
@@ -25,7 +26,7 @@ function * initialize ({ host, csrfToken }) {
   yield put(actions[types.api.SET_CSRF_TOKEN](csrfToken))
   yield put(actions[types.api.SET_BROWSER_ID](window.navigator.userAgent))
   yield put(actions[types.api.SET_SESSION_ID](randomBytes(16).toString('base64')))
-  yield put(actions[types.api.SET_COMPUTER_ID](yield findIP))
+  // yield put(actions[types.api.SET_COMPUTER_ID](yield findIP))
   yield put(todo.actions[types.todo.API_FETCH]())
 }
 

@@ -8,6 +8,7 @@ import schema from './schema'
 function * apiFetch () {
   const fetch = yield api.fetchGet({ path: '/todos' })
   const response = yield fetch
+  yield put(api.actions[types.api.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
   if (response.status !== 200) return
   const todos = yield response.json()
   const normalizedTodos = normalize(todos, schema)

@@ -5,9 +5,12 @@ import { NavLink } from 'react-router-dom'
 import constants from '../store/constants'
 import filter from '../store/filter'
 import types from '../store/types'
+import api from '../store/api'
 
 class AppHeader extends Component {
   static propTypes = {
+    userID: PropTypes.string.isRequired,
+    isAuth: PropTypes.bool,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -17,16 +20,27 @@ class AppHeader extends Component {
 
   handleCompleted = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
 
+  status = () => this.props.isAuth ? `logged in as ${this.props.userID}` : 'not logged in'
+
   render () {
     return (
       <div>
         <h3>TODO App</h3>
-        <NavLink to={'/'}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
-        <NavLink to={`/${constants.SHOW_ACTIVE}`} ><span onClick={this.handleActive}>Active</span></NavLink>&nbsp;
-        <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>&nbsp;
+        <div>{this.status()}</div>
+        <div>
+          Narbar:&nbsp;
+          <NavLink to={'/'}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
+          <NavLink to={`/${constants.SHOW_ACTIVE}`} ><span onClick={this.handleActive}>Active</span></NavLink>&nbsp;
+          <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>&nbsp;
+        </div>
       </div>
     )
   }
 }
 
-export default connect()(AppHeader)
+const mapStateToProps = state => ({
+  isAuth: api.selectors.isAuth(state),
+  userID: api.selectors.getUserID(state)
+})
+
+export default connect(mapStateToProps)(AppHeader)
