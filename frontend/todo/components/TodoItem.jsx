@@ -1,28 +1,34 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { push } from 'react-router-redux'
 import types from '../store/types'
 import todo from '../store/todo'
+import api from '../store/api'
 
 class TodoItem extends Component {
   static propTypes = {
+    isAuth: PropTypes.bool.isRequired,
     todo: PropTypes.shape({
       id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired
     }),
+    route: PropTypes.func.isRequired,
     todoUpdate: PropTypes.func.isRequired,
     todoDelete: PropTypes.func.isRequired
   }
 
   handleChange = event => {
     event.stopPropagation()
-    this.props.todoUpdate({ ...this.props.todo, completed: !this.props.todo.completed })
+    if (this.props.isAuth) this.props.todoUpdate({ ...this.props.todo, completed: !this.props.todo.completed })
+    else this.props.route('/login')
   }
 
   handleDelete = event => {
     event.stopPropagation()
-    this.props.todoDelete(this.props.todo.id)
+    if (this.props.isAuth) this.props.todoDelete(this.props.todo.id)
+    else this.props.route('/login')
   }
 
   render () {
@@ -42,11 +48,16 @@ class TodoItem extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isAuth: api.selectors.isAuth(state)
+})
+
 const mapDispatchToProps = dispatch => {
   return {
+    route: route => dispatch(push(route)),
     todoUpdate: newTodo => dispatch(todo.actions[types.todo.API_UPDATE](newTodo)),
     todoDelete: id => dispatch(todo.actions[types.todo.API_DELETE](id))
   }
 }
 
-export default connect(null, mapDispatchToProps)(TodoItem)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItem)

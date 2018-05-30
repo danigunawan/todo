@@ -5,7 +5,7 @@ import types from '../types'
 import actions from './actions'
 import schema from './schema'
 
-function * apiFetch (action) {
+function * apiFetch () {
   const fetch = yield api.fetchGet({ path: '/todos' })
   const response = yield fetch
   if (response.status !== 200) return
@@ -14,26 +14,26 @@ function * apiFetch (action) {
   yield put(actions[types.todo.FETCH](normalizedTodos))
 }
 
-function * apiAdd (action) {
-  const fetch = yield api.fetchPost({ path: '/todos', payload: { text: action.text } })
+function * apiAdd ({ text }) {
+  const fetch = yield api.fetchPost({ path: '/todos', payload: { text } })
   const response = yield fetch
   if (response.status !== 200) return
   const todo = yield response.json()
   yield put(actions[types.todo.ADD](todo))
 }
 
-function * apiUpdate (action) {
-  const fetch = yield api.fetchPut({ path: '/todos', id: action.todo.id, payload: action.todo })
+function * apiUpdate ({ todo }) {
+  const fetch = yield api.fetchPut({ path: '/todos', id: todo.id, payload: todo })
   const response = yield fetch
   if (response.status !== 204) return
-  yield put(actions[types.todo.UPDATE](action.todo))
+  yield put(actions[types.todo.UPDATE](todo))
 }
 
-function * apiDelete (action) {
-  const fetch = yield api.fetchDelete({ path: '/todos', id: action.id })
+function * apiDelete ({ id }) {
+  const fetch = yield api.fetchDelete({ path: '/todos', id })
   const response = yield fetch
   if (response.status !== 204) return
-  yield put(actions[types.todo.DELETE](action.id))
+  yield put(actions[types.todo.DELETE](id))
 }
 
 export default {

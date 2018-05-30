@@ -1,6 +1,8 @@
 import types from '../types'
 
 export default {
+  [types.todo.SET_TEXT]: text => ({ type: types.todo.SET_TEXT, text }),
+
   [types.todo.FETCH]: todos => ({ type: types.todo.FETCH, todos }),
 
   [types.todo.NEW]: todos => ({ type: types.todo.NEW, todos }),

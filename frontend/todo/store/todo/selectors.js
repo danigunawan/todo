@@ -4,6 +4,8 @@ import filter from '../filter'
 
 const todoState = state => state.todo
 
+const getText = createSelector(todoState, todo => todo.get('text'))
+
 const getResult = createSelector(todoState, todo => todo.get('result'))
 
 const getEntities = createSelector(todoState, todo => todo.get('entities'))
@@ -24,6 +26,7 @@ const getVisibleTodos = createSelector(filter.selectors.getFilter, getTodos, (fi
 
 export default {
   todoState,
+  getText,
   getResult,
   getEntities,
   getTodos,

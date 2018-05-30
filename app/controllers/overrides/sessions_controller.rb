@@ -4,7 +4,7 @@ class Overrides::SessionsController < Devise::SessionsController
   wrap_parameters format: [:json]
 
   def create
-    if user.valid_password?(create_params[:password])
+    if user&.valid_password?(create_params[:password])
       render json: user.as_json(only: %i[email authentication_token]), status: :created
     else
       head :unauthorized

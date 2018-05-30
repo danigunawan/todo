@@ -8,5 +8,5 @@ const initialState = fromJS({
 })
 
 export default helper.createReducer(initialState, {
-  [types.filter.SET]: (state, action) => state.set('filter', action.filter)
+  [types.filter.SET]: (state, { filter }) => state.set('filter', filter)
 })

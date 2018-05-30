@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import PropTypes from 'prop-types'
 import types from '../store/types'
 import todo from '../store/todo'
 import api from '../store/api'
@@ -9,42 +9,51 @@ import api from '../store/api'
 class TodoAdd extends Component {
   constructor (props) {
     super(props)
-    this.state = { value: '' }
+    this.state = { value: this.props.text }
   }
 
   static propTypes = {
+    text: PropTypes.string.isRequired,
     isAuth: PropTypes.bool.isRequired,
     addTodo: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired
+    setText: PropTypes.func.isRequired,
+    route: PropTypes.func.isRequired
   }
 
-  handleChange = event => this.setState({value: event.target.value})
+  handleChange = event => this.setState({ value: event.target.value })
 
   handleSubmit = event => {
     event.preventDefault()
     if (!this.state.value.trim()) return
-    if (!this.props.isAuth) return this.props.login()
-    this.props.addTodo(this.state.value)
-    this.setState({ value: '' })
+    if (this.props.isAuth) {
+      this.props.addTodo(this.state.value)
+      this.props.setText('')
+      this.setState({ value: '' })
+    } else {
+      this.props.setText(this.state.value)
+      this.props.route('/login')
+    }
   }
 
   render () {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input value={this.state.value} onChange={this.handleChange} />
-          <button type='submit'>Add Todo</button>
-        </form>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <input value={this.state.value} onChange={this.handleChange} />
+        <button type='submit'>Add Todo</button>
+      </form>
     )
   }
 }
 
-const mapStateToProps = state => ({ isAuth: api.selectors.isAuth(state) })
+const mapStateToProps = state => ({
+  text: todo.selectors.getText(state),
+  isAuth: api.selectors.isAuth(state)
+})
 
 const mapDispatchToProps = dispatch => ({
-  login: () => dispatch(push('/login')),
-  addTodo: text => dispatch(todo.actions[types.todo.API_ADD](text))
+  route: route => dispatch(push(route)),
+  addTodo: text => dispatch(todo.actions[types.todo.API_ADD](text)),
+  setText: text => dispatch(todo.actions[types.todo.SET_TEXT](text))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoAdd)

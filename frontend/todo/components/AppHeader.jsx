@@ -11,23 +11,17 @@ class AppHeader extends Component {
     dispatch: PropTypes.func.isRequired
   }
 
-  handleAll = () => {
-    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ALL))
-  }
+  handleAll = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ALL))
 
-  handleActive = () => {
-    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ACTIVE))
-  }
+  handleActive = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ACTIVE))
 
-  handleCompleted = () => {
-    this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
-  }
+  handleCompleted = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
 
   render () {
     return (
       <div>
         <h3>TODO App</h3>
-        <NavLink to={`/${constants.SHOW_ALL}`}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
+        <NavLink to={'/'}><span onClick={this.handleAll}>All</span></NavLink>&nbsp;
         <NavLink to={`/${constants.SHOW_ACTIVE}`} ><span onClick={this.handleActive}>Active</span></NavLink>&nbsp;
         <NavLink to={`/${constants.SHOW_COMPLETED}`} ><span onClick={this.handleCompleted}>Completed</span></NavLink>&nbsp;
       </div>

@@ -1,5 +1,6 @@
 export default {
   todo: {
+    SET_TEXT: 'todoSetText',
     FETCH: 'todoFetch',
     API_FETCH: 'todoAPIFetch',
     ADD: 'todoAdd',

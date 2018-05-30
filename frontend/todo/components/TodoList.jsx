@@ -1,9 +1,13 @@
+import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TodoItem from './TodoItem'
 import todo from '../store/todo'
 
 class TodoList extends Component {
+  static propTypes = {
+    todos: PropTypes.object.isRequired
+  }
   render () {
     return (
       <div>

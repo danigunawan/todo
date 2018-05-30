@@ -73,18 +73,23 @@ function * fetchDelete ({ path, id }) {
 function * login ({ email, password }) {
   const host = yield select(selectors.getHost)
   const uuid = yield select(selectors.getUUID)
-  const response = yield window.fetch(`${host}/users/sign_in`, {
-    method: 'post',
-    credentials: 'include',
-    headers: {
-      uuid,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, password })
-  })
-  const json = yield response.json()
-  yield put(actions[types.api.SET_USER_ID](json.email))
-  yield put(actions[types.api.SET_AUTH_TOKEN](json.authentication_token))
+  try {
+    const response = yield window.fetch(`${host}/users/sign_in`, {
+      method: 'post',
+      credentials: 'include',
+      headers: {
+        uuid,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+    if (response.status !== 201) return console.log('error/unauthorized')
+    const json = yield response.json()
+    yield put(actions[types.api.SET_USER_ID](json.email))
+    yield put(actions[types.api.SET_AUTH_TOKEN](json.authentication_token))
+  } catch (e) {
+    console.log('server error', e)
+  }
 }
 
 export default {

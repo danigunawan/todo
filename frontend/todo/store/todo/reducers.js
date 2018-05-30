@@ -3,12 +3,15 @@ import types from '../types'
 import helper from '../helper'
 
 const initialState = fromJS({
+  text: '',
   entities: { todos: {} },
   result: []
 })
 
 export default helper.createReducer(initialState, {
-  [types.todo.FETCH]: (state, action) => state.mergeDeep(action.todos),
+  [types.todo.SET_TEXT]: (state, { text }) => state.set('text', text),
+
+  [types.todo.FETCH]: (state, { todos }) => state.mergeDeep(todos),
 
   [types.todo.ADD]: (state, { todo }) => {
     return state
