@@ -6,8 +6,7 @@ import {
   TextInput,
   View
 } from 'react-native'
-import types from '../../todo/store/types'
-import todo from '../../todo/store/todo'
+import todo from '../store/todo'
 
 class TodoAdd extends Component {
   static propTypes = {
@@ -25,8 +24,8 @@ class TodoAdd extends Component {
 
   handleAdd = () => {
     if (!this.state.text.trim()) return
-    this.props.dispatch(todo.actions[types.todo.ADD_API](this.state.text, 'https://krevoe.com'))
-      .then(() => this.setState({ text: '' }))
+    this.props.dispatch(todo.actions[todo.types.API_ADD](this.state.text))
+    this.setState({ text: '' })
   }
 
   render () {

@@ -7,8 +7,7 @@ import {
   View
 } from 'react-native'
 
-import types from '../../todo/store/types'
-import todo from '../../todo/store/todo'
+import todo from '../store/todo'
 
 class TodoItem extends Component {
   static propTypes = {
@@ -41,8 +40,8 @@ class TodoItem extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    todoUpdate: newTodo => dispatch(todo.actions[types.todo.UPDATE_API](newTodo, 'https://krevoe.com')),
-    todoDelete: id => dispatch(todo.actions[types.todo.DELETE_API](id, 'https://krevoe.com'))
+    todoUpdate: newTodo => dispatch(todo.actions[todo.types.API_UPDATE](newTodo)),
+    todoDelete: id => dispatch(todo.actions[todo.types.API_DELETE](id))
   }
 }
 

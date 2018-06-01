@@ -5,6 +5,7 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
+import filter from '../store/filter'
 
 class AppHeader extends Component {
   static propTypes = {
@@ -20,6 +21,6 @@ class AppHeader extends Component {
   }
 }
 
-const mapStateToProps = state => ({ filter: state.filter })
+const mapStateToProps = state => ({ filter: filter.selectors.getFilter(state) })
 
 export default connect(mapStateToProps)(AppHeader)

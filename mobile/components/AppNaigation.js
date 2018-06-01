@@ -5,20 +5,19 @@ import {
   View
 } from 'react-native'
 import { connect } from 'react-redux'
-import types from '../../todo/store/types'
-import filter from '../../todo/store/filter'
-import constants from '../../todo/store/constants'
+import filter from '../store/filter'
+import constants from '../store/constants'
 
 class AppHeader extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired
   }
 
-  handleAll = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ALL))
+  handleAll = () => this.props.dispatch(filter.actions[filter.types.SET](constants.SHOW_ALL))
 
-  handleActive = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_ACTIVE))
+  handleActive = () => this.props.dispatch(filter.actions[filter.types.SET](constants.SHOW_ACTIVE))
 
-  handleDone = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
+  handleDone = () => this.props.dispatch(filter.actions[filter.types.SET](constants.SHOW_COMPLETED))
 
   render () {
     return (
