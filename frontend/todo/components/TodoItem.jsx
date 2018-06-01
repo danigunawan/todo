@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import types from '../store/types'
 import todo from '../store/todo'
-import api from '../store/api'
+import auth from '../store/auth'
 
 class TodoItem extends Component {
   static propTypes = {
@@ -49,7 +49,7 @@ class TodoItem extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuth: api.selectors.isAuth(state)
+  isAuth: auth.selectors.isAuth(state)
 })
 
 const mapDispatchToProps = dispatch => {

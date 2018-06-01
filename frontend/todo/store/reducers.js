@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import todo from './todo'
-import filter from './filter'
 import api from './api'
+import auth from './auth'
+import filter from './filter'
+import todo from './todo'
 
 export default combineReducers({
+  api: api.reducers,
+  auth: auth.reducers,
   todo: todo.reducers,
   filter: filter.reducers,
-  api: api.reducers,
   router: routerReducer
 })

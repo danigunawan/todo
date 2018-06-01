@@ -1,21 +1,26 @@
 import { takeEvery } from 'redux-saga/effects'
-import types from '../types'
+import types from './types'
 import api from './api'
 
-function * watchAPIFetch () {
-  yield takeEvery(types.todo.API_FETCH, api.apiFetch)
-}
-
 function * watchAPIAdd () {
-  yield takeEvery(types.todo.API_ADD, api.apiAdd)
-}
-
-function * watchAPIUpdate () {
-  yield takeEvery(types.todo.API_UPDATE, api.apiUpdate)
+  yield takeEvery(types.API_ADD, api.apiAdd)
 }
 
 function * watchAPIDelete () {
-  yield takeEvery(types.todo.API_DELETE, api.apiDelete)
+  yield takeEvery(types.API_DELETE, api.apiDelete)
 }
 
-export default [ watchAPIFetch(), watchAPIAdd(), watchAPIUpdate(), watchAPIDelete() ]
+function * watchAPIFetch () {
+  yield takeEvery(types.API_FETCH, api.apiFetch)
+}
+
+function * watchAPIUpdate () {
+  yield takeEvery(types.API_UPDATE, api.apiUpdate)
+}
+
+export default [
+  watchAPIAdd(),
+  watchAPIDelete(),
+  watchAPIFetch(),
+  watchAPIUpdate()
+]

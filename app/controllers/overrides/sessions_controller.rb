@@ -1,10 +1,14 @@
 class Overrides::SessionsController < Devise::SessionsController
   # protect_from_forgery with: :null_session
+  before_action do
+    p params
+  end
   skip_before_action :verify_authenticity_token, only: %i[create]
   wrap_parameters format: [:json]
 
   def create
     if user&.valid_password?(create_params[:password])
+      user.update!(uuid: request.headers['X-UUID'])
       render json: user.as_json(only: %i[email authentication_token]), status: :created
     else
       head :unauthorized

@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom'
 import constants from '../store/constants'
 import filter from '../store/filter'
 import types from '../store/types'
-import api from '../store/api'
+import auth from '../store/auth'
 
 class AppHeader extends Component {
   static propTypes = {
-    userID: PropTypes.string.isRequired,
+    authID: PropTypes.string.isRequired,
     isAuth: PropTypes.bool,
     dispatch: PropTypes.func.isRequired
   }
@@ -20,7 +20,7 @@ class AppHeader extends Component {
 
   handleCompleted = () => this.props.dispatch(filter.actions[types.filter.SET](constants.SHOW_COMPLETED))
 
-  status = () => this.props.isAuth ? `logged in as ${this.props.userID}` : 'not logged in'
+  status = () => this.props.isAuth ? `logged in as ${this.props.authID}` : 'not logged in'
 
   render () {
     return (
@@ -39,8 +39,8 @@ class AppHeader extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuth: api.selectors.isAuth(state),
-  userID: api.selectors.getUserID(state)
+  isAuth: auth.selectors.isAuth(state),
+  authID: auth.selectors.getAuthID(state)
 })
 
 export default connect(mapStateToProps)(AppHeader)

@@ -2,8 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import types from '../store/types'
-import api from '../store/api'
+import auth from '../store/auth'
 
 class AppLogin extends Component {
   constructor (props) {
@@ -48,7 +47,7 @@ class AppLogin extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  login: (email, password) => dispatch(api.actions[types.api.LOGIN](email, password))
+  login: (email, password) => dispatch(auth.actions[auth.types.LOGIN](email, password))
 })
 
 export default withRouter(connect(null, mapDispatchToProps)(AppLogin))

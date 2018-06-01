@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import types from '../store/types'
 import todo from '../store/todo'
-import api from '../store/api'
+import auth from '../store/auth'
 
 class TodoAdd extends Component {
   constructor (props) {
@@ -47,7 +47,7 @@ class TodoAdd extends Component {
 
 const mapStateToProps = state => ({
   text: todo.selectors.getText(state),
-  isAuth: api.selectors.isAuth(state)
+  isAuth: auth.selectors.isAuth(state)
 })
 
 const mapDispatchToProps = dispatch => ({

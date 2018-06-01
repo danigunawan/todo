@@ -35,6 +35,10 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       ## For simple_token_authentication
       t.string :authentication_token, limit: 30
 
+      ## For tracking unauthorized users
+      t.string :uuid, limit: 36
+      t.string :fingerprint, limit: 36
+
       t.timestamps null: false
     end
 

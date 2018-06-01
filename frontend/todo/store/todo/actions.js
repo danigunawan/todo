@@ -1,23 +1,23 @@
-import types from '../types'
+import types from './types'
 
 export default {
-  [types.todo.SET_TEXT]: text => ({ type: types.todo.SET_TEXT, text }),
+  [types.ADD]: todo => ({ type: types.ADD, todo }),
 
-  [types.todo.FETCH]: todos => ({ type: types.todo.FETCH, todos }),
+  [types.API_ADD]: text => ({ type: types.API_ADD, text }),
 
-  [types.todo.NEW]: todos => ({ type: types.todo.NEW, todos }),
+  [types.API_DELETE]: id => ({ type: types.API_DELETE, id }),
 
-  [types.todo.UPDATE]: todo => ({ type: types.todo.UPDATE, todo }),
+  [types.API_FETCH]: () => ({ type: types.API_FETCH }),
 
-  [types.todo.DELETE]: id => ({ type: types.todo.DELETE, id }),
+  [types.API_UPDATE]: todo => ({ type: types.API_UPDATE, todo }),
 
-  [types.todo.ADD]: todo => ({ type: types.todo.ADD, todo }),
+  [types.DELETE]: id => ({ type: types.DELETE, id }),
 
-  [types.todo.API_FETCH]: () => ({ type: types.todo.API_FETCH }),
+  [types.FETCH]: todos => ({ type: types.FETCH, todos }),
 
-  [types.todo.API_ADD]: text => ({ type: types.todo.API_ADD, text }),
+  [types.NEW]: todos => ({ type: types.NEW, todos }),
 
-  [types.todo.API_UPDATE]: todo => ({ type: types.todo.API_UPDATE, todo }),
+  [types.SET_TEXT]: text => ({ type: types.SET_TEXT, text }),
 
-  [types.todo.API_DELETE]: id => ({ type: types.todo.API_DELETE, id })
+  [types.UPDATE]: todo => ({ type: types.UPDATE, todo })
 }

@@ -5,15 +5,12 @@ import { ConnectedRouter } from 'react-router-redux'
 import AppLayout from './components/AppLayout'
 import AppLogin from './components/AppLogin'
 import store, { history } from './store'
-import types from './store/types'
-import api from './store/api'
+import auth from './store/auth'
 
 export default class App extends Component {
   componentDidMount () {
     const host = 'http://localhost:3000'
-    const token = document.head.querySelector('meta[name=csrf-token]')
-    const csrfToken = token ? token.content : ''
-    store.dispatch(api.actions[types.api.INITIALIZE](host, csrfToken))
+    store.dispatch(auth.actions[auth.types.INITIALIZE](host))
   }
 
   render () {

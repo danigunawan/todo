@@ -1,18 +1,20 @@
 import { normalize } from 'normalizr'
-import { put } from 'redux-saga/effects'
+import { put, select } from 'redux-saga/effects'
 import api from '../api'
-import types from '../types'
+import auth from '../auth'
 import actions from './actions'
 import schema from './schema'
+import types from './types'
 
 function * apiFetch () {
-  const fetch = yield api.fetchGet({ path: '/todos' })
+  const fingerprint = yield select(auth.selectors.getFingerprintID)
+  const fetch = yield api.fetchGet({ path: '/todos', headers: { 'X-Fingerprint': fingerprint } })
   const response = yield fetch
-  yield put(api.actions[types.api.SET_COMPUTER_ID](response.headers.get('X-Client-IP')))
+  yield put(auth.actions[auth.types.SET_UUID](response.headers.get('X-UUID')))
   if (response.status !== 200) return
   const todos = yield response.json()
   const normalizedTodos = normalize(todos, schema)
-  yield put(actions[types.todo.FETCH](normalizedTodos))
+  yield put(actions[types.FETCH](normalizedTodos))
 }
 
 function * apiAdd ({ text }) {
@@ -20,21 +22,21 @@ function * apiAdd ({ text }) {
   const response = yield fetch
   if (response.status !== 200) return
   const todo = yield response.json()
-  yield put(actions[types.todo.ADD](todo))
+  yield put(actions[types.ADD](todo))
 }
 
 function * apiUpdate ({ todo }) {
   const fetch = yield api.fetchPut({ path: '/todos', id: todo.id, payload: todo })
   const response = yield fetch
   if (response.status !== 204) return
-  yield put(actions[types.todo.UPDATE](todo))
+  yield put(actions[types.UPDATE](todo))
 }
 
 function * apiDelete ({ id }) {
   const fetch = yield api.fetchDelete({ path: '/todos', id })
   const response = yield fetch
   if (response.status !== 204) return
-  yield put(actions[types.todo.DELETE](id))
+  yield put(actions[types.DELETE](id))
 }
 
 export default {

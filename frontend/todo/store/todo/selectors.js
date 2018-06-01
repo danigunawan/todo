@@ -25,7 +25,6 @@ const getVisibleTodos = createSelector(filter.selectors.getFilter, getTodos, (fi
 })
 
 export default {
-  todoState,
   getText,
   getResult,
   getEntities,

@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class TodosController < ActionController::API
   acts_as_token_authentication_handler_for User, fallback: :none
   before_action :authenticate_user!, except: [:index]
@@ -5,7 +7,11 @@ class TodosController < ActionController::API
 
   def index
     @todos = Todo.all
-    response.set_header('X-Client-IP', request.remote_ip)
+    uuid = request.headers['X-UUID'] || SecureRandom.uuid
+    uuid = SecureRandom.uuid if uuid.blank?
+    fingerprint = request.headers['X-Fingerprint']
+    p fingerprint
+    response.set_header('X-UUID', uuid)
   end
 
   def create
