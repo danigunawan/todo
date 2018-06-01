@@ -1,11 +1,11 @@
-import api from './api/types'
-import auth from './auth/types'
-import filter from './filter/types'
-import todo from './todo/types'
+import api from './api'
+import auth from './auth'
+import filter from './filter'
+import todo from './todo'
 
 export default {
-  api,
-  auth,
-  filter,
-  todo
+  api: api.types,
+  auth: auth.types,
+  filter: filter.types,
+  todo: todo.types
 }

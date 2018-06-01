@@ -1,8 +1,5 @@
 class Overrides::SessionsController < Devise::SessionsController
   # protect_from_forgery with: :null_session
-  before_action do
-    p params
-  end
   skip_before_action :verify_authenticity_token, only: %i[create]
   wrap_parameters format: [:json]
 

@@ -4,8 +4,12 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import AppLayout from './components/AppLayout'
 import AppLogin from './components/AppLogin'
-import store, { history } from './store'
+import store from './store'
 import auth from './store/auth'
+import sagas from './store/sagas'
+import { history, saga } from './store/middleware'
+
+saga.run(sagas)
 
 export default class App extends Component {
   componentDidMount () {
