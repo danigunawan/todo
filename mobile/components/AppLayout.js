@@ -1,39 +1,47 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import types from '../../todo/store/types'
-import todo from '../../todo/store/todo'
+// import types from '../../todo/store/types'
+// import todo from '../../todo/store/todo'
 import AppHeader from './AppHeader'
-import TodoAdd from './TodoAdd'
-import TodoList from './TodoList'
+// import TodoAdd from './TodoAdd'
+// import TodoList from './TodoList'
 import {
   StyleSheet,
   View
 } from 'react-native'
-import AppNaigation from './AppNaigation'
-import AppBreadcrumbs from './AppBreadcrumbs'
+// import AppNaigation from './AppNaigation'
+// import AppBreadcrumbs from './AppBreadcrumbs'
 
 class AppLayout extends Component {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired
-  }
+  // static propTypes = {
+  //   dispatch: PropTypes.func.isRequired
+  // }
 
   componentDidMount () {
-    this.props.dispatch(todo.actions[types.todo.FETCH_API]('https://krevoe.com'))
+    // this.props.dispatch(todo.actions[types.todo.FETCH_API]('https://krevoe.com'))
   }
 
   render () {
     return (
       <View style={styles.container}>
         <AppHeader />
-        <TodoAdd />
-        <AppBreadcrumbs />
-        <TodoList />
-        <AppNaigation />
       </View>
     )
   }
+
+  // render () {
+  //   return (
+  //     <View style={styles.container}>
+  //       <AppHeader />
+  //       <TodoAdd />
+  //       <AppBreadcrumbs />
+  //       <TodoList />
+  //       <AppNaigation />
+  //     </View>
+  //   )
+  // }
 }
 
 const styles = StyleSheet.create({

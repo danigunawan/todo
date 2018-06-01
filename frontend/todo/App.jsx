@@ -13,8 +13,7 @@ saga.run(sagas)
 
 export default class App extends Component {
   componentDidMount () {
-    const host = 'http://localhost:3000'
-    store.dispatch(auth.actions[auth.types.INITIALIZE](host))
+    store.dispatch(auth.actions[auth.types.INITIALIZE]())
   }
 
   render () {

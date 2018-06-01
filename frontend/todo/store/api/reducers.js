@@ -3,7 +3,7 @@ import types from './types'
 import helper from '../helper'
 
 const initialState = fromJS({
-  host: 'http://localhost'
+  host: ''
 })
 
 export default helper.createReducer(initialState, {

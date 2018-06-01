@@ -1,7 +1,7 @@
 import types from './types'
 
 export default {
-  [types.INITIALIZE]: (host = 'http://localhost') => ({ type: types.INITIALIZE, host }),
+  [types.INITIALIZE]: (host = '') => ({ type: types.INITIALIZE, host }),
 
   [types.LOGIN]: (email, password) => ({ type: types.LOGIN, email, password }),
 

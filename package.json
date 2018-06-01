@@ -38,7 +38,7 @@
     "standard": "^11.0.1",
     "webpack-dev-server": "2.11.2"
   },
-  "main": "./frontend/todo-native/crna-entry",
+  "main": "./mobile/crna-entry",
   "scripts": {
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
