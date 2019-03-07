@@ -6,9 +6,9 @@ services:
       POSTGRES_USER:
       POSTGRES_PASSWORD:
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      - /srv/docker/postgres:/var/lib/postgresql/data
+    expose:
+      - 5432
 
   backend:
     environment: &backend_env
@@ -22,14 +22,14 @@ services:
         REPOSITORY: git@github.com:dmlaziuk/todo.git
         BRANCH: master
     volumes:
-      - ./log:/var/www/todo/log
-      - ./tmp:/var/www/todo/tmp
+      - /srv/docker/todo/log:/var/www/todo/log
+      - /srv/docker/todo/tmp:/var/www/todo/tmp
       - public:/var/www/todo/public
     command: sh -c "./docker-entrypoint.sh"
 
   nginx:
     environment: &nginx_env
-      TZ: Europe/Minsk
+      TZ: Etc/UTC
       LETSENCRYPT: 'false'
       LE_EMAIL: dm.laziuk@gmail.com
       LE_FQDN: krevoe.com
@@ -41,12 +41,11 @@ services:
       context: ./docker/nginx
       args:
         ENVIRONMENT: production
-    hostname: nginx
     restart: always
     volumes:
-        - ./ssl:/etc/nginx/ssl
-        - ./tmp:/var/www/todo/tmp
-        - ./log:/var/www/todo/log
+        - /srv/docker/todo/ssl:/etc/nginx/ssl
+        - /srv/docker/todo/tmp:/var/www/todo/tmp
+        - /srv/docker/todo/log:/var/www/todo/log
         - public:/var/www/todo/public
     depends_on:
       - backend
